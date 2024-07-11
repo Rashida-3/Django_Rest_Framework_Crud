@@ -28,5 +28,19 @@ class StudentAPI(APIView):
         return Response(serializer.data)   
 
 
-    def put(self,request):
-        pass
+    def put(self,request,pk):
+        id=pk
+        stu=student.objects.get(pk=id)
+        serializer=studentserde(stu, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        return Response("updated")
+
+    def delete(self, request,pk):
+        id=pk
+        stu=student.objects.get(id=pk)
+        stu.delete()
+        return Response("msg: deleletd")
+
+
+        
